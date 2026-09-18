@@ -108,6 +108,11 @@
       border: 1px solid #1e1e1e;
       object-fit: cover; aspect-ratio: 16/9;
     }
+    .about-video { margin-top: 1rem; }
+    .about-video iframe {
+      width: 100%; aspect-ratio: 16/9; border-radius: 8px;
+      border: 1px solid #1e1e1e;
+    }
     .skills { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .6rem; }
     .skill-tag {
       padding: .35rem .9rem; border-radius: 20px;
@@ -261,6 +266,7 @@
   <ul class="nav-links">
     <li><a href="#about" data-i18n="nav_about">About</a></li>
     <li><a href="#gallery" data-i18n="nav_work">Work</a></li>
+    <li><a href="#showreel" data-i18n="nav_reel">Showreel</a></li>
     <li><a href="#resume" data-i18n="nav_resume">Resume</a></li>
     <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
   </ul>
@@ -301,6 +307,15 @@
       </div>
     </div>
     <img class="about-img" src="images/4kmalpasohalloween.jpg" alt="3D Studio render" />
+  </div>
+</section>
+
+<!-- SHOWREEL -->
+<section id="showreel" style="background:var(--bg); padding:4rem 2rem; text-align:center;">
+  <p class="section-label" data-i18n="reel_label">Showreel</p>
+  <h2 class="section-title" data-i18n="reel_title">Watch My Work</h2>
+  <div style="max-width:900px; margin:2rem auto;">
+    <iframe style="width:100%; aspect-ratio:16/9; border-radius:8px; border:1px solid #1e1e1e;" src="https://www.youtube.com/embed/QhN7MtrByfI" title="Gonzalo Álvarez - Showreel" allowfullscreen></iframe>
   </div>
 </section>
 
@@ -399,11 +414,12 @@
   // ── i18n ──
   const translations = {
     en: {
-      nav_about: "About", nav_work: "Work", nav_resume: "Resume", nav_contact: "Contact",
+      nav_about: "About", nav_work: "Work", nav_reel: "Showreel", nav_resume: "Resume", nav_contact: "Contact",
       hero_sub: "3D Generalist · Artist · Developer",
       hero_cta: "View My Work",
       about_label: "About Me", about_title: "Crafting worlds in 3D",
       about_text: "I'm a 3D generalist with a passion for creating compelling visuals — from hard-surface modeling and environment design to character art and concept illustration. I combine technical precision with artistic vision to bring ideas to life.",
+      reel_label: "Showreel", reel_title: "Watch My Work",
       parallax1: '"Every pixel is a <span>decision</span>."',
       gallery_label: "Portfolio", gallery_title: "Selected Works",
       filter_all: "All", filter_3d: "3D Renders", filter_concept: "Concept Art", filter_char: "Characters",
@@ -416,11 +432,12 @@
       contact_cv: "Download CV"
     },
     es: {
-      nav_about: "Sobre mí", nav_work: "Trabajo", nav_resume: "Currículum", nav_contact: "Contacto",
+      nav_about: "Sobre mí", nav_work: "Trabajo", nav_reel: "Showreel", nav_resume: "Currículum", nav_contact: "Contacto",
       hero_sub: "Generalista 3D · Artista · Desarrollador",
       hero_cta: "Ver mi trabajo",
       about_label: "Sobre mí", about_title: "Creando mundos en 3D",
       about_text: "Soy un generalista 3D apasionado por crear visuales impactantes — desde modelado hard-surface y diseño de entornos hasta arte de personajes e ilustración conceptual. Combino precisión técnica con visión artística para dar vida a las ideas.",
+      reel_label: "Showreel", reel_title: "Ver mi trabajo en video",
       parallax1: '"Cada píxel es una <span>decisión</span>."',
       gallery_label: "Portafolio", gallery_title: "Trabajos Seleccionados",
       filter_all: "Todos", filter_3d: "Renders 3D", filter_concept: "Arte Conceptual", filter_char: "Personajes",
