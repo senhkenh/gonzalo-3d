@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gonzalo Álvarez — 3D Generalist</title>
+  <style>
+    :root {
+      --purple: #7c3aed;
+      --purple-light: #a855f7;
+      --purple-dim: #4c1d95;
+      --bg: #080808;
+      --bg2: #0f0f0f;
+      --text: #e2e2e2;
+      --muted: #888;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2.5rem;
+      background: rgba(8,8,8,.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .nav-logo { font-size: 1.1rem; font-weight: 700; letter-spacing: .05em; color: var(--purple-light); }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--purple-light); }
+    .lang-btn {
+      background: none; border: 1px solid var(--purple); color: var(--purple-light);
+      padding: .3rem .8rem; border-radius: 4px; cursor: pointer; font-size: .85rem;
+      transition: background .2s;
+    }
+    .lang-btn:hover { background: var(--purple-dim); }
+
+    /* ── HERO ── */
+    #hero {
+      height: 100vh;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('images/acorazado.png') center/cover no-repeat;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(8,8,8,.55) 0%, rgba(8,8,8,.85) 100%);
+    }
+    .hero-content { position: relative; text-align: center; padding: 0 1rem; }
+    .hero-content h1 {
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 800; letter-spacing: -.02em;
+      line-height: 1.05;
+    }
+    .hero-content h1 span { color: var(--purple-light); }
+    .hero-content p {
+      margin-top: 1rem; font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--muted); letter-spacing: .1em; text-transform: uppercase;
+    }
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: inline-block;
+      padding: .85rem 2.2rem;
+      background: var(--purple);
+      color: #fff; text-decoration: none;
+      border-radius: 6px; font-weight: 600;
+      transition: background .2s, transform .2s;
+    }
+    .hero-cta:hover { background: var(--purple-light); transform: translateY(-2px); }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 2rem; }
+    .section-label {
+      text-transform: uppercase; letter-spacing: .2em;
+      font-size: .75rem; color: var(--purple-light); margin-bottom: .6rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; margin-bottom: 1rem;
+    }
+    .section-sub { color: var(--muted); max-width: 560px; line-height: 1.7; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+    .about-grid {
+      max-width: 1100px; margin: 3rem auto 0;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .about-img {
+      width: 100%; border-radius: 8px;
+      border: 1px solid #1e1e1e;
+      object-fit: cover; aspect-ratio: 16/9;
+    }
+    .skills { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .6rem; }
+    .skill-tag {
+      padding: .35rem .9rem; border-radius: 20px;
+      border: 1px solid var(--purple); color: var(--purple-light);
+      font-size: .8rem;
+    }
+    .skills-bars { margin-top: 2rem; display: flex; flex-direction: column; gap: .75rem; }
+    .skill-row { display: grid; grid-template-columns: 140px 1fr 36px; align-items: center; gap: .75rem; }
+    .skill-name { font-size: .82rem; color: var(--text); white-space: nowrap; }
+    .skill-track {
+      height: 8px; background: #2a1a3e; border-radius: 99px; overflow: hidden;
+    }
+    .skill-fill {
+      height: 100%; width: 0; border-radius: 99px;
+      background: var(--purple-light);
+      box-shadow: 0 0 8px var(--purple-light);
+      transition: width 1s cubic-bezier(.4,0,.2,1);
+    }
+    .skill-pct { font-size: .75rem; color: var(--purple-light); text-align: right; }
+
+    /* ── PARALLAX DIVIDER ── */
+    .parallax-section {
+      height: 60vh; position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .parallax-bg {
+      position: absolute; inset: -20%;
+      background-size: cover; background-position: center;
+      background-attachment: fixed;
+    }
+    .parallax-overlay {
+      position: absolute; inset: 0;
+      background: rgba(8,8,8,.6);
+    }
+    .parallax-text {
+      position: relative; text-align: center;
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 700; color: #fff;
+    }
+    .parallax-text span { color: var(--purple-light); }
+
+    /* ── GALLERY ── */
+    #gallery { background: var(--bg); }
+    .gallery-header { max-width: 1100px; margin: 0 auto 2.5rem; }
+    .gallery-tabs { display: flex; gap: .5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .tab-btn {
+      padding: .4rem 1.1rem; border-radius: 20px;
+      border: 1px solid #333; background: none;
+      color: var(--muted); cursor: pointer; font-size: .85rem;
+      transition: all .2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      border-color: var(--purple); color: var(--purple-light);
+      background: rgba(124,58,237,.1);
+    }
+    .gallery-grid {
+      max-width: 1100px; margin: 0 auto;
+      columns: 3; gap: 1rem;
+    }
+    .gallery-item {
+      break-inside: avoid; margin-bottom: 1rem;
+      position: relative; overflow: hidden; border-radius: 6px;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%; display: block;
+      transition: transform .4s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item .overlay {
+      position: absolute; inset: 0;
+      background: rgba(124,58,237,.0);
+      transition: background .3s;
+      display: flex; align-items: flex-end; padding: 1rem;
+    }
+    .gallery-item:hover .overlay { background: rgba(124,58,237,.25); }
+    .gallery-item .overlay span {
+      color: #fff; font-size: .8rem; opacity: 0;
+      transition: opacity .3s; text-transform: uppercase; letter-spacing: .1em;
+    }
+    .gallery-item:hover .overlay span { opacity: 1; }
+    .gallery-item[data-cat] { display: block; }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.92);
+      align-items: center; justify-content: center;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 6px; }
+    #lightbox-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-size: 2rem; color: #fff; cursor: pointer; background: none; border: none;
+    }
+
+    /* ── PARALLAX 2 ── */
+    #parallax2 .parallax-bg { background-image: url('images/studio_09.png'); }
+
+    /* ── RESUME ── */
+    #resume { background: var(--bg2); }
+    .resume-inner { max-width: 900px; margin: 3rem auto 0; }
+    .resume-embed {
+      width: 100%; height: 700px; border: 1px solid #1e1e1e;
+      border-radius: 8px; background: #111;
+    }
+    .resume-dl {
+      display: inline-block; margin-top: 1.5rem;
+      padding: .75rem 2rem; background: var(--purple);
+      color: #fff; text-decoration: none; border-radius: 6px;
+      font-weight: 600; transition: background .2s;
+    }
+    .resume-dl:hover { background: var(--purple-light); }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg); text-align: center; }
+    .contact-links { margin-top: 2rem; display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+    .contact-link {
+      padding: .7rem 1.8rem; border: 1px solid var(--purple);
+      color: var(--purple-light); text-decoration: none;
+      border-radius: 6px; font-size: .9rem;
+      transition: background .2s;
+    }
+    .contact-link:hover { background: var(--purple-dim); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2rem;
+      border-top: 1px solid #1a1a1a;
+      color: var(--muted); font-size: .8rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .gallery-grid { columns: 2; }
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid { columns: 1; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">G. Álvarez</span>
+  <ul class="nav-links">
+    <li><a href="#about" data-i18n="nav_about">About</a></li>
+    <li><a href="#gallery" data-i18n="nav_work">Work</a></li>
+    <li><a href="#resume" data-i18n="nav_resume">Resume</a></li>
+    <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+  </ul>
+  <button class="lang-btn" id="langToggle">ES</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Gonzalo <span>Álvarez</span></h1>
+    <p data-i18n="hero_sub">3D Generalist · Artist · Developer</p>
+    <a href="#gallery" class="hero-cta" data-i18n="hero_cta">View My Work</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <p class="section-label" data-i18n="about_label">About Me</p>
+      <h2 class="section-title" data-i18n="about_title">Crafting worlds in 3D</h2>
+      <p class="section-sub" data-i18n="about_text">
+        I'm a 3D generalist with a passion for creating compelling visuals — from hard-surface modeling and environment design to character art and concept illustration. I combine technical precision with artistic vision to bring ideas to life.
+      </p>
+      <div class="skills-bars">
+        <div class="skill-row"><span class="skill-name">Maya</span><div class="skill-track"><div class="skill-fill" data-w="80"></div></div><span class="skill-pct">80%</span></div>
+        <div class="skill-row"><span class="skill-name">Houdini</span><div class="skill-track"><div class="skill-fill" data-w="60"></div></div><span class="skill-pct">60%</span></div>
+        <div class="skill-row"><span class="skill-name">Blender</span><div class="skill-track"><div class="skill-fill" data-w="90"></div></div><span class="skill-pct">90%</span></div>
+        <div class="skill-row"><span class="skill-name">ZBrush</span><div class="skill-track"><div class="skill-fill" data-w="80"></div></div><span class="skill-pct">80%</span></div>
+        <div class="skill-row"><span class="skill-name">Substance Painter</span><div class="skill-track"><div class="skill-fill" data-w="60"></div></div><span class="skill-pct">60%</span></div>
+        <div class="skill-row"><span class="skill-name">Photoshop</span><div class="skill-track"><div class="skill-fill" data-w="95"></div></div><span class="skill-pct">95%</span></div>
+        <div class="skill-row"><span class="skill-name">Illustrator</span><div class="skill-track"><div class="skill-fill" data-w="70"></div></div><span class="skill-pct">70%</span></div>
+        <div class="skill-row"><span class="skill-name">Nuke</span><div class="skill-track"><div class="skill-fill" data-w="80"></div></div><span class="skill-pct">80%</span></div>
+        <div class="skill-row"><span class="skill-name">Premiere Pro</span><div class="skill-track"><div class="skill-fill" data-w="80"></div></div><span class="skill-pct">80%</span></div>
+        <div class="skill-row"><span class="skill-name">After Effects</span><div class="skill-track"><div class="skill-fill" data-w="70"></div></div><span class="skill-pct">70%</span></div>
+      </div>
+    </div>
+    <img class="about-img" src="images/4kmalpasohalloween.jpg" alt="3D Studio render" />
+  </div>
+</section>
+
+<!-- PARALLAX 1 -->
+<div class="parallax-section">
+  <div class="parallax-bg" style="background-image:url('images/Studio_013.png')"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-text" data-i18n="parallax1">"Every pixel is a <span>decision</span>."</div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <p class="section-label" data-i18n="gallery_label">Portfolio</p>
+    <h2 class="section-title" data-i18n="gallery_title">Selected Works</h2>
+    <div class="gallery-tabs">
+      <button class="tab-btn active" data-filter="all" data-i18n="filter_all">All</button>
+    </div>
+  </div>
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-item" data-cat="3d" data-label="Studio 05"><img src="images/studio_05.png" alt="Studio 05" loading="lazy"><div class="overlay"><span>Studio 05</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Studio 013"><img src="images/Studio_013.png" alt="Studio 013" loading="lazy"><div class="overlay"><span>Studio 013</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Studio 0018"><img src="images/Studio_0018.png" alt="Studio 0018" loading="lazy"><div class="overlay"><span>Studio 0018</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Studio 011"><img src="images/Studio_011.png" alt="Studio 011" loading="lazy"><div class="overlay"><span>Studio 011</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Studio 08"><img src="images/Studio_08-1.png" alt="Studio 08" loading="lazy"><div class="overlay"><span>Studio 08</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Studio 09"><img src="images/studio_09.png" alt="Studio 09" loading="lazy"><div class="overlay"><span>Studio 09</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Anime Studio"><img src="images/anime_studio_04_final.png" alt="Anime Studio" loading="lazy"><div class="overlay"><span>Anime Studio</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Acorazado"><img src="images/acorazado.png" alt="Acorazado" loading="lazy"><div class="overlay"><span>Acorazado</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Celeridus"><img src="images/celeridus.png" alt="Celeridus" loading="lazy"><div class="overlay"><span>Celeridus</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Truck Model"><img src="images/truck01.png" alt="Truck" loading="lazy"><div class="overlay"><span>Truck Model</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Motor Avión"><img src="images/motoravion01.png" alt="Motor Avion" loading="lazy"><div class="overlay"><span>Motor Avión</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="SpaceX"><img src="images/spacex02.png" alt="SpaceX" loading="lazy"><div class="overlay"><span>SpaceX</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Proyecto Nuevo"><img src="images/Proyecto nuevo.png" alt="Proyecto Nuevo" loading="lazy"><div class="overlay"><span>Proyecto Nuevo</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Halloween"><img src="images/4kmalpasohalloween.jpg" alt="Halloween" loading="lazy"><div class="overlay"><span>Halloween</span></div></div>
+    <div class="gallery-item" data-cat="concept" data-label="Concept Art"><img src="images/concept_art_07.png" alt="Concept Art 07" loading="lazy"><div class="overlay"><span>Concept Art</span></div></div>
+    <div class="gallery-item" data-cat="concept" data-label="Concept Art 02"><img src="images/concept_art_07_02.png" alt="Concept Art 02" loading="lazy"><div class="overlay"><span>Concept Art 02</span></div></div>
+    <div class="gallery-item" data-cat="concept" data-label="Concept Art 03"><img src="images/concept_art_07_03.png" alt="Concept Art 03" loading="lazy"><div class="overlay"><span>Concept Art 03</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Venom"><img src="images/venom_03.png" alt="Venom" loading="lazy"><div class="overlay"><span>Venom</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Venom 02"><img src="images/venom_02.png" alt="Venom 02" loading="lazy"><div class="overlay"><span>Venom 02</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Guardian Astronómico"><img src="images/guardian_astronomico_photoshop.png" alt="Guardian" loading="lazy"><div class="overlay"><span>Guardian Astronómico</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Crab"><img src="images/crab_photoshop.png" alt="Crab" loading="lazy"><div class="overlay"><span>Crab</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Seres"><img src="images/Seres.png" alt="Seres" loading="lazy"><div class="overlay"><span>Seres</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Salivante de Playa"><img src="images/salivante_de_playa_01.png" alt="Salivante" loading="lazy"><div class="overlay"><span>Salivante de Playa</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Kuruko Yi 01"><img src="images/kuruko-yi_01.png" alt="Kuruko Yi 01" loading="lazy"><div class="overlay"><span>Kuruko Yi 01</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Kuruko Yi 02"><img src="images/kuruko-yi_02.png" alt="Kuruko Yi 02" loading="lazy"><div class="overlay"><span>Kuruko Yi 02</span></div></div>
+  </div>
+</section>
+
+<!-- PARALLAX 2 -->
+<div class="parallax-section" id="parallax2">
+  <div class="parallax-bg" style="background-image:url('images/pexels.jpg')"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-text"><span data-i18n="parallax2">Also a Computer Scientist</span></div>
+</div>
+
+<!-- RESUME / CS -->
+<section id="resume">
+  <div class="resume-inner">
+    <p class="section-label" data-i18n="resume_label">Computer Science</p>
+    <h2 class="section-title" data-i18n="resume_title">Academic & Technical Background</h2>
+    <p class="section-sub" data-i18n="resume_text">
+      Beyond art, I hold a background in Computer Science — bridging the gap between technical development and creative production.
+    </p>
+    <iframe class="resume-embed" id="resumeEmbed" src="Gonzalo-Alvarez-CV-EN.pdf" title="Resume"></iframe>
+    <br>
+    <a class="resume-dl" id="resumeDl" href="Gonzalo-Alvarez-CV-EN.pdf" download data-i18n="resume_dl">Download Resume (PDF)</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label" data-i18n="contact_label">Get In Touch</p>
+  <h2 class="section-title" data-i18n="contact_title">Let's Work Together</h2>
+  <p class="section-sub" style="margin:0 auto" data-i18n="contact_text">
+    Open to freelance projects, collaborations, and full-time opportunities.
+  </p>
+  <div class="contact-links">
+    <a class="contact-link" href="mailto:gonzalo.alvarez.dev@gmail.com">✉ Email</a>
+    <a class="contact-link" href="https://www.artstation.com/gonzaloalvarezdeasturias" target="_blank">ArtStation</a>
+    <a class="contact-link" href="https://www.linkedin.com/in/gonzalo-reynaldo-fabi%C3%A1n-%C3%A1lvarez-alvarado-22aa1bab/" target="_blank">LinkedIn</a>
+    <a class="contact-link" id="contactCv" href="Gonzalo-Alvarez-CV-EN.pdf" download data-i18n="contact_cv">Download CV</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Gonzalo Álvarez · 3D Generalist</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close">✕</button>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<script>
+  // ── i18n ──
+  const translations = {
+    en: {
+      nav_about: "About", nav_work: "Work", nav_resume: "Resume", nav_contact: "Contact",
+      hero_sub: "3D Generalist · Artist · Developer",
+      hero_cta: "View My Work",
+      about_label: "About Me", about_title: "Crafting worlds in 3D",
+      about_text: "I'm a 3D generalist with a passion for creating compelling visuals — from hard-surface modeling and environment design to character art and concept illustration. I combine technical precision with artistic vision to bring ideas to life.",
+      parallax1: '"Every pixel is a <span>decision</span>."',
+      gallery_label: "Portfolio", gallery_title: "Selected Works",
+      filter_all: "All", filter_3d: "3D Renders", filter_concept: "Concept Art", filter_char: "Characters",
+      parallax2: "Also a Computer Scientist",
+      resume_label: "Computer Science", resume_title: "Academic & Technical Background",
+      resume_text: "Beyond art, I hold a background in Computer Science — bridging the gap between technical development and creative production.",
+      resume_dl: "Download Resume (PDF)",
+      contact_label: "Get In Touch", contact_title: "Let's Work Together",
+      contact_text: "Open to freelance projects, collaborations, and full-time opportunities.",
+      contact_cv: "Download CV"
+    },
+    es: {
+      nav_about: "Sobre mí", nav_work: "Trabajo", nav_resume: "Currículum", nav_contact: "Contacto",
+      hero_sub: "Generalista 3D · Artista · Desarrollador",
+      hero_cta: "Ver mi trabajo",
+      about_label: "Sobre mí", about_title: "Creando mundos en 3D",
+      about_text: "Soy un generalista 3D apasionado por crear visuales impactantes — desde modelado hard-surface y diseño de entornos hasta arte de personajes e ilustración conceptual. Combino precisión técnica con visión artística para dar vida a las ideas.",
+      parallax1: '"Cada píxel es una <span>decisión</span>."',
+      gallery_label: "Portafolio", gallery_title: "Trabajos Seleccionados",
+      filter_all: "Todos", filter_3d: "Renders 3D", filter_concept: "Arte Conceptual", filter_char: "Personajes",
+      parallax2: "También Científico en Computación",
+      resume_label: "Ciencias de la Computación", resume_title: "Formación Académica y Técnica",
+      resume_text: "Más allá del arte, tengo formación en Ciencias de la Computación — uniendo el desarrollo técnico con la producción creativa.",
+      resume_dl: "Descargar Currículum (PDF)",
+      contact_label: "Contacto", contact_title: "Trabajemos Juntos",
+      contact_text: "Disponible para proyectos freelance, colaboraciones y oportunidades de tiempo completo.",
+      contact_cv: "Descargar CV"
+    }
+  };
+
+  let lang = 'en';
+  const langBtn = document.getElementById('langToggle');
+
+  const cvFiles = {
+    en: 'Gonzalo-Alvarez-CV-EN.pdf',
+    es: 'GonzaloAlvarez_Mayo_2026.pdf'
+  };
+
+  function applyLang(l) {
+    lang = l;
+    langBtn.textContent = l === 'en' ? 'ES' : 'EN';
+    document.documentElement.lang = l;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (translations[l][key] !== undefined) el.innerHTML = translations[l][key];
+    });
+    const cv = cvFiles[l];
+    document.getElementById('resumeEmbed').src = cv;
+    document.getElementById('resumeDl').href = cv;
+    document.getElementById('contactCv').href = cv;
+  }
+
+  langBtn.addEventListener('click', () => applyLang(lang === 'en' ? 'es' : 'en'));
+
+  // ── Skill bars animation ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  observer.observe(document.querySelector('.skills-bars'));
+
+  // ── Parallax ──
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    heroBg.style.transform = `translateY(${y * 0.4}px)`;
+  }, { passive: true });
+
+  // ── Gallery filter ──
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.style.display = (filter === 'all' || item.dataset.cat === filter) ? 'block' : 'none';
+      });
+    });
+  });
+
+  // ── Lightbox ──
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => {
+      lbImg.src = item.querySelector('img').src;
+      lbImg.alt = item.dataset.label;
+      lightbox.classList.add('open');
+    });
+  });
+  document.getElementById('lightbox-close').addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+</script>
+</body>
+</html>
