@@ -156,7 +156,7 @@
 
     /* ── GALLERY ── */
     #gallery { background: var(--bg); }
-    .gallery-header { max-width: 1100px; margin: 0 auto 2.5rem; }
+    .gallery-header { max-width: 1400px; margin: 0 auto 2.5rem; }
     .gallery-tabs { display: flex; gap: .5rem; margin-top: 1.5rem; flex-wrap: wrap; }
     .tab-btn {
       padding: .4rem 1.1rem; border-radius: 20px;
@@ -169,11 +169,11 @@
       background: rgba(124,58,237,.1);
     }
     .gallery-grid {
-      max-width: 1100px; margin: 0 auto;
-      columns: 3; gap: 1rem;
+      max-width: 1400px; margin: 0 auto;
+      columns: 2; gap: 1.5rem;
     }
     .gallery-item {
-      break-inside: avoid; margin-bottom: 1rem;
+      break-inside: avoid; margin-bottom: 1.5rem;
       position: relative; overflow: hidden; border-radius: 6px;
       cursor: pointer;
     }
@@ -194,7 +194,8 @@
       transition: opacity .3s; text-transform: uppercase; letter-spacing: .1em;
     }
     .gallery-item:hover .overlay span { opacity: 1; }
-    .gallery-item[data-cat] { display: block; }
+    .gallery-item.featured { column-span: all; }
+    .gallery-item.featured img { max-height: 80vh; object-fit: cover; width: 100%; }
 
     /* ── LIGHTBOX ── */
     #lightbox {
@@ -245,16 +246,46 @@
       color: var(--muted); font-size: .8rem;
     }
 
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: .3rem;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--purple-light); border-radius: 2px;
+      transition: all .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .gallery-grid { columns: 2; }
       nav { padding: 1rem 1.2rem; }
-      .nav-links { gap: 1rem; }
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none; flex-direction: column; gap: 0;
+        position: absolute; top: 100%; left: 0; width: 100%;
+        background: rgba(8,8,8,.97); border-bottom: 1px solid #1a1a1a;
+        padding: .5rem 0;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links li a { display: block; padding: .85rem 1.5rem; font-size: 1rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .skill-row { grid-template-columns: 110px 1fr 32px; }
+      .gallery-grid { columns: 1; gap: 1rem; }
+      .gallery-header { padding: 0 1rem; }
+      .parallax-section { height: 40vh; background-attachment: scroll; }
+      .parallax-bg { background-attachment: scroll; }
+      .resume-embed { height: 420px; }
+      section { padding: 4rem 1.2rem; }
+      #showreel { padding: 3rem 1.2rem; }
     }
     @media (max-width: 480px) {
-      .gallery-grid { columns: 1; }
-      .nav-links { display: none; }
+      .hero-content h1 { font-size: 2.4rem; }
+      .contact-links { flex-direction: column; align-items: center; }
+      .contact-link { width: 100%; max-width: 280px; text-align: center; }
     }
   </style>
 </head>
@@ -263,14 +294,19 @@
 <!-- NAV -->
 <nav>
   <span class="nav-logo">G. Álvarez</span>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about" data-i18n="nav_about">About</a></li>
     <li><a href="#gallery" data-i18n="nav_work">Work</a></li>
     <li><a href="#showreel" data-i18n="nav_reel">Showreel</a></li>
     <li><a href="#resume" data-i18n="nav_resume">Resume</a></li>
     <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
   </ul>
-  <button class="lang-btn" id="langToggle">ES</button>
+  <div style="display:flex;gap:.8rem;align-items:center;">
+    <button class="lang-btn" id="langToggle">ES</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -336,20 +372,16 @@
     </div>
   </div>
   <div class="gallery-grid" id="galleryGrid">
-    <div class="gallery-item" data-cat="3d" data-label="Studio 05"><img src="images/studio_05.png" alt="Studio 05" loading="lazy"><div class="overlay"><span>Studio 05</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Studio 013"><img src="images/Studio_013.png" alt="Studio 013" loading="lazy"><div class="overlay"><span>Studio 013</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Studio 0018"><img src="images/Studio_0018.png" alt="Studio 0018" loading="lazy"><div class="overlay"><span>Studio 0018</span></div></div>
+    <div class="gallery-item featured" data-cat="3d" data-label="Spring is here"><img src="images/Studio_013.png" alt="Studio 013" loading="lazy"><div class="overlay"><span>Spring is here</span></div></div>
     <div class="gallery-item" data-cat="3d" data-label="Studio 011"><img src="images/Studio_011.png" alt="Studio 011" loading="lazy"><div class="overlay"><span>Studio 011</span></div></div>
     <div class="gallery-item" data-cat="3d" data-label="Studio 08"><img src="images/Studio_08-1.png" alt="Studio 08" loading="lazy"><div class="overlay"><span>Studio 08</span></div></div>
     <div class="gallery-item" data-cat="3d" data-label="Studio 09"><img src="images/studio_09.png" alt="Studio 09" loading="lazy"><div class="overlay"><span>Studio 09</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Anime Studio"><img src="images/anime_studio_04_final.png" alt="Anime Studio" loading="lazy"><div class="overlay"><span>Anime Studio</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Acorazado"><img src="images/acorazado.png" alt="Acorazado" loading="lazy"><div class="overlay"><span>Acorazado</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Celeridus"><img src="images/celeridus.png" alt="Celeridus" loading="lazy"><div class="overlay"><span>Celeridus</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="Aurora in summer"><img src="images/anime_studio_04_final.png" alt="Anime Studio" loading="lazy"><div class="overlay"><span>Aurora in summer</span></div></div>
+    <div class="gallery-item featured" data-cat="3d" data-label="Acorazado"><img src="images/acorazado.png" alt="Acorazado" loading="lazy"><div class="overlay"><span>Acorazado</span></div></div>
     <div class="gallery-item" data-cat="3d" data-label="Truck Model"><img src="images/truck01.png" alt="Truck" loading="lazy"><div class="overlay"><span>Truck Model</span></div></div>
     <div class="gallery-item" data-cat="3d" data-label="Motor Avión"><img src="images/motoravion01.png" alt="Motor Avion" loading="lazy"><div class="overlay"><span>Motor Avión</span></div></div>
     <div class="gallery-item" data-cat="3d" data-label="SpaceX"><img src="images/spacex02.png" alt="SpaceX" loading="lazy"><div class="overlay"><span>SpaceX</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Proyecto Nuevo"><img src="images/Proyecto nuevo.png" alt="Proyecto Nuevo" loading="lazy"><div class="overlay"><span>Proyecto Nuevo</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Halloween"><img src="images/4kmalpasohalloween.jpg" alt="Halloween" loading="lazy"><div class="overlay"><span>Halloween</span></div></div>
+    <div class="gallery-item featured" data-cat="3d" data-label="Halloween"><img src="images/4kmalpasohalloween.jpg" alt="Halloween" loading="lazy"><div class="overlay"><span>Halloween</span></div></div>
     <div class="gallery-item" data-cat="concept" data-label="Concept Art"><img src="images/concept_art_07.png" alt="Concept Art 07" loading="lazy"><div class="overlay"><span>Concept Art</span></div></div>
     <div class="gallery-item" data-cat="concept" data-label="Concept Art 02"><img src="images/concept_art_07_02.png" alt="Concept Art 02" loading="lazy"><div class="overlay"><span>Concept Art 02</span></div></div>
     <div class="gallery-item" data-cat="concept" data-label="Concept Art 03"><img src="images/concept_art_07_03.png" alt="Concept Art 03" loading="lazy"><div class="overlay"><span>Concept Art 03</span></div></div>
@@ -359,8 +391,8 @@
     <div class="gallery-item" data-cat="character" data-label="Crab"><img src="images/crab_photoshop.png" alt="Crab" loading="lazy"><div class="overlay"><span>Crab</span></div></div>
     <div class="gallery-item" data-cat="character" data-label="Seres"><img src="images/Seres.png" alt="Seres" loading="lazy"><div class="overlay"><span>Seres</span></div></div>
     <div class="gallery-item" data-cat="character" data-label="Salivante de Playa"><img src="images/salivante_de_playa_01.png" alt="Salivante" loading="lazy"><div class="overlay"><span>Salivante de Playa</span></div></div>
-    <div class="gallery-item" data-cat="character" data-label="Kuruko Yi 01"><img src="images/kuruko-yi_01.png" alt="Kuruko Yi 01" loading="lazy"><div class="overlay"><span>Kuruko Yi 01</span></div></div>
-    <div class="gallery-item" data-cat="character" data-label="Kuruko Yi 02"><img src="images/kuruko-yi_02.png" alt="Kuruko Yi 02" loading="lazy"><div class="overlay"><span>Kuruko Yi 02</span></div></div>
+    <div class="gallery-item featured" data-cat="character" data-label="Kuruko Yi 01"><img src="images/kuruko-yi_01.png" alt="Kuruko Yi 01" loading="lazy"><div class="overlay"><span>Kuruko Yi 01</span></div></div>
+    <div class="gallery-item featured" data-cat="character" data-label="Kuruko Yi 02"><img src="images/kuruko-yi_02.png" alt="Kuruko Yi 02" loading="lazy"><div class="overlay"><span>Kuruko Yi 02</span></div></div>
   </div>
 </section>
 
@@ -411,6 +443,18 @@
 </div>
 
 <script>
+  // ── Hamburger ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+  }));
+
   // ── i18n ──
   const translations = {
     en: {
