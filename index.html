@@ -30,27 +30,27 @@
     nav {
       position: fixed; top: 0; width: 100%; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 2.5rem;
-      background: rgba(8,8,8,.85);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid #1a1a1a;
+      padding: 0 3rem; height: 56px;
+      background: rgba(8,8,8,.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
     }
-    .nav-logo { font-size: 1.1rem; font-weight: 700; letter-spacing: .05em; color: var(--purple-light); }
-    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
-    .nav-links a:hover { color: var(--purple-light); }
+    .nav-logo { font-size: 1rem; font-weight: 700; letter-spacing: .08em; color: #fff; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.5); text-decoration: none; font-size: .82rem; letter-spacing: .04em; transition: color .2s; }
+    .nav-links a:hover { color: #fff; }
     .lang-btn {
-      background: none; border: 1px solid var(--purple); color: var(--purple-light);
-      padding: .3rem .8rem; border-radius: 4px; cursor: pointer; font-size: .85rem;
-      transition: background .2s;
+      background: none; border: 1px solid rgba(168,85,247,.5); color: var(--purple-light);
+      padding: .28rem .75rem; border-radius: 20px; cursor: pointer; font-size: .78rem; letter-spacing: .05em;
+      transition: all .2s;
     }
-    .lang-btn:hover { background: var(--purple-dim); }
+    .lang-btn:hover { background: var(--purple); border-color: var(--purple); color: #fff; }
 
     /* ── HERO ── */
     #hero {
-      height: 100vh;
+      height: 100vh; min-height: 600px;
       position: relative;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; align-items: flex-end; justify-content: flex-start;
       overflow: hidden;
     }
     .hero-bg {
@@ -61,81 +61,134 @@
     }
     .hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(8,8,8,.55) 0%, rgba(8,8,8,.85) 100%);
+      background:
+        linear-gradient(to right, rgba(8,8,8,.92) 0%, rgba(8,8,8,.5) 55%, transparent 100%),
+        linear-gradient(to top, rgba(8,8,8,.7) 0%, transparent 50%);
     }
-    .hero-content { position: relative; text-align: center; padding: 0 1rem; }
+    .hero-content {
+      position: relative;
+      padding: 0 5vw 8vh;
+      max-width: 700px;
+      text-align: left;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      margin-bottom: 1.4rem;
+      font-size: .7rem; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--purple-light);
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 28px; height: 1px;
+      background: var(--purple-light);
+    }
     .hero-content h1 {
-      font-size: clamp(2.8rem, 7vw, 6rem);
-      font-weight: 800; letter-spacing: -.02em;
-      line-height: 1.05;
+      font-size: clamp(3.2rem, 7vw, 7rem);
+      font-weight: 900; letter-spacing: -.04em;
+      line-height: .95; color: #fff;
     }
-    .hero-content h1 span { color: var(--purple-light); }
+    .hero-content h1 .last { display: block; color: var(--purple-light); }
     .hero-content p {
-      margin-top: 1rem; font-size: clamp(1rem, 2vw, 1.3rem);
-      color: var(--muted); letter-spacing: .1em; text-transform: uppercase;
+      margin-top: 1.6rem; font-size: clamp(.85rem, 1.4vw, 1rem);
+      color: rgba(255,255,255,.4); letter-spacing: .1em; text-transform: uppercase;
+      max-width: 380px;
     }
+    .hero-actions { margin-top: 2.8rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
     .hero-cta {
-      margin-top: 2.5rem;
-      display: inline-block;
+      display: inline-flex; align-items: center; gap: .5rem;
       padding: .85rem 2.2rem;
       background: var(--purple);
       color: #fff; text-decoration: none;
-      border-radius: 6px; font-weight: 600;
-      transition: background .2s, transform .2s;
+      border-radius: 50px; font-weight: 600; font-size: .88rem; letter-spacing: .03em;
+      transition: background .25s, transform .25s, box-shadow .25s;
+      box-shadow: 0 0 30px rgba(124,58,237,.4);
     }
-    .hero-cta:hover { background: var(--purple-light); transform: translateY(-2px); }
+    .hero-cta:hover { background: var(--purple-light); transform: translateY(-2px); box-shadow: 0 8px 40px rgba(168,85,247,.5); }
+    .hero-cta-ghost {
+      display: inline-flex; align-items: center; gap: .4rem;
+      color: rgba(255,255,255,.55); font-size: .85rem; text-decoration: none;
+      letter-spacing: .04em; transition: color .2s;
+    }
+    .hero-cta-ghost:hover { color: #fff; }
+    .hero-cta-ghost::after { content: '↓'; font-size: .9rem; }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; right: 4vw;
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      color: rgba(255,255,255,.2); font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+      writing-mode: vertical-rl;
+    }
+    .hero-scroll::after {
+      content: ''; display: block; width: 1px; height: 50px;
+      background: linear-gradient(to bottom, rgba(168,85,247,.7), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%,100% { opacity: .3; transform: scaleY(.8) translateY(0); }
+      50% { opacity: 1; transform: scaleY(1) translateY(4px); }
+    }
 
     /* ── SECTION BASE ── */
-    section { padding: 6rem 2rem; }
+    section { padding: 8rem 2rem; }
     .section-label {
-      text-transform: uppercase; letter-spacing: .2em;
-      font-size: .75rem; color: var(--purple-light); margin-bottom: .6rem;
+      display: inline-block;
+      text-transform: uppercase; letter-spacing: .22em;
+      font-size: .7rem; color: var(--purple-light); margin-bottom: .8rem;
     }
     .section-title {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700; margin-bottom: 1rem;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 800; margin-bottom: 1.2rem; letter-spacing: -.02em; line-height: 1.1;
     }
-    .section-sub { color: var(--muted); max-width: 560px; line-height: 1.7; }
+    .section-sub { color: rgba(255,255,255,.45); max-width: 520px; line-height: 1.8; font-size: .95rem; }
 
     /* ── ABOUT ── */
-    #about { background: var(--bg2); }
+    #about { background: var(--bg2); overflow: hidden; }
     .about-grid {
-      max-width: 1100px; margin: 3rem auto 0;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch;
+    }
+    .about-left {
+      padding: 7rem 5rem 7rem 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .about-right {
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
     .about-img {
-      width: 100%; border-radius: 8px;
-      border: 1px solid #1e1e1e;
+      width: 100%; display: block;
       object-fit: cover; aspect-ratio: 16/9;
+      filter: brightness(.9);
+      transition: transform .6s ease;
     }
-    .about-video { margin-top: 1rem; }
+    .about-img:hover { transform: scale(1.02); }
     .about-video iframe {
-      width: 100%; aspect-ratio: 16/9; border-radius: 8px;
-      border: 1px solid #1e1e1e;
+      width: 100%; aspect-ratio: 16/9; display: block;
+      border: none;
     }
-    .skills { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .6rem; }
-    .skill-tag {
-      padding: .35rem .9rem; border-radius: 20px;
-      border: 1px solid var(--purple); color: var(--purple-light);
-      font-size: .8rem;
+    .about-divider {
+      height: 1px; background: rgba(255,255,255,.05);
     }
-    .skills-bars { margin-top: 2rem; display: flex; flex-direction: column; gap: .75rem; }
-    .skill-row { display: grid; grid-template-columns: 140px 1fr 36px; align-items: center; gap: .75rem; }
-    .skill-name { font-size: .82rem; color: var(--text); white-space: nowrap; }
+    .about-text { margin-top: 1.6rem; color: rgba(255,255,255,.5); line-height: 1.85; font-size: .95rem; max-width: 440px; }
+    .skills-bars { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.1rem; }
+    .skills-title {
+      font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(255,255,255,.25); margin-bottom: .4rem;
+    }
+    .skill-row { display: grid; grid-template-columns: 120px 1fr 34px; align-items: center; gap: 1rem; }
+    .skill-name { font-size: .78rem; color: rgba(255,255,255,.5); letter-spacing: .02em; }
     .skill-track {
-      height: 8px; background: #2a1a3e; border-radius: 99px; overflow: hidden;
+      height: 3px; background: rgba(255,255,255,.06); border-radius: 99px; overflow: hidden;
     }
     .skill-fill {
       height: 100%; width: 0; border-radius: 99px;
-      background: var(--purple-light);
-      box-shadow: 0 0 8px var(--purple-light);
-      transition: width 1s cubic-bezier(.4,0,.2,1);
+      background: linear-gradient(90deg, var(--purple), var(--purple-light));
+      box-shadow: 0 0 8px rgba(168,85,247,.4);
+      transition: width 1.4s cubic-bezier(.4,0,.2,1);
     }
-    .skill-pct { font-size: .75rem; color: var(--purple-light); text-align: right; }
+    .skill-pct { font-size: .7rem; color: rgba(168,85,247,.7); text-align: right; font-variant-numeric: tabular-nums; }
 
     /* ── PARALLAX DIVIDER ── */
     .parallax-section {
-      height: 60vh; position: relative; overflow: hidden;
+      height: 65vh; position: relative; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
     }
     .parallax-bg {
@@ -145,105 +198,113 @@
     }
     .parallax-overlay {
       position: absolute; inset: 0;
-      background: rgba(8,8,8,.6);
+      background: linear-gradient(to bottom, rgba(8,8,8,.5), rgba(8,8,8,.7));
     }
     .parallax-text {
-      position: relative; text-align: center;
-      font-size: clamp(1.5rem, 4vw, 3rem);
-      font-weight: 700; color: #fff;
+      position: relative; text-align: center; padding: 0 2rem;
+      font-size: clamp(1.6rem, 4.5vw, 3.5rem);
+      font-weight: 800; color: #fff; letter-spacing: -.02em; line-height: 1.2;
     }
     .parallax-text span { color: var(--purple-light); }
 
     /* ── GALLERY ── */
     #gallery { background: var(--bg); }
-    .gallery-header { max-width: 1400px; margin: 0 auto 2.5rem; }
+    .gallery-header { max-width: 1400px; margin: 0 auto 3rem; }
     .gallery-tabs { display: flex; gap: .5rem; margin-top: 1.5rem; flex-wrap: wrap; }
     .tab-btn {
-      padding: .4rem 1.1rem; border-radius: 20px;
-      border: 1px solid #333; background: none;
-      color: var(--muted); cursor: pointer; font-size: .85rem;
+      padding: .4rem 1.2rem; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.1); background: none;
+      color: rgba(255,255,255,.4); cursor: pointer; font-size: .8rem; letter-spacing: .04em;
       transition: all .2s;
     }
     .tab-btn.active, .tab-btn:hover {
       border-color: var(--purple); color: var(--purple-light);
-      background: rgba(124,58,237,.1);
+      background: rgba(124,58,237,.12);
     }
     .gallery-grid {
       max-width: 1400px; margin: 0 auto;
-      columns: 2; gap: 1.5rem;
+      columns: 2; gap: 1.2rem;
     }
     .gallery-item {
-      break-inside: avoid; margin-bottom: 1.5rem;
-      position: relative; overflow: hidden; border-radius: 6px;
-      cursor: pointer;
+      break-inside: avoid; margin-bottom: 1.2rem;
+      position: relative; overflow: hidden; border-radius: 10px;
+      cursor: pointer; background: #111;
     }
     .gallery-item img {
       width: 100%; display: block;
-      transition: transform .4s ease;
+      transition: transform .5s cubic-bezier(.4,0,.2,1);
     }
-    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item:hover img { transform: scale(1.05); }
     .gallery-item .overlay {
       position: absolute; inset: 0;
-      background: rgba(124,58,237,.0);
-      transition: background .3s;
-      display: flex; align-items: flex-end; padding: 1rem;
+      background: linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 50%);
+      opacity: 0; transition: opacity .35s;
+      display: flex; align-items: flex-end; padding: 1.4rem;
     }
-    .gallery-item:hover .overlay { background: rgba(124,58,237,.25); }
+    .gallery-item:hover .overlay { opacity: 1; }
     .gallery-item .overlay span {
-      color: #fff; font-size: .8rem; opacity: 0;
-      transition: opacity .3s; text-transform: uppercase; letter-spacing: .1em;
+      color: #fff; font-size: .78rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .12em;
     }
-    .gallery-item:hover .overlay span { opacity: 1; }
     .gallery-item.featured { column-span: all; }
     .gallery-item.featured img { max-height: 80vh; object-fit: cover; width: 100%; }
+    .gallery-item.portrait { column-span: all; }
+    .gallery-item.portrait img { width: 50%; display: block; margin: 0 auto; height: auto; max-height: none; }
 
     /* ── LIGHTBOX ── */
     #lightbox {
       display: none; position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,.92);
+      background: rgba(0,0,0,.95);
       align-items: center; justify-content: center;
+      backdrop-filter: blur(8px);
     }
     #lightbox.open { display: flex; }
-    #lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 6px; }
+    #lightbox img { max-width: 92vw; max-height: 92vh; border-radius: 10px; box-shadow: 0 40px 100px rgba(0,0,0,.8); }
     #lightbox-close {
       position: absolute; top: 1.5rem; right: 2rem;
-      font-size: 2rem; color: #fff; cursor: pointer; background: none; border: none;
+      font-size: 1.6rem; color: rgba(255,255,255,.6); cursor: pointer; background: none; border: none;
+      transition: color .2s;
     }
+    #lightbox-close:hover { color: #fff; }
 
     /* ── PARALLAX 2 ── */
     #parallax2 .parallax-bg { background-image: url('images/studio_09.png'); }
 
     /* ── RESUME ── */
     #resume { background: var(--bg2); }
-    .resume-inner { max-width: 900px; margin: 3rem auto 0; }
+    .resume-inner { max-width: 860px; margin: 4rem auto 0; }
     .resume-embed {
-      width: 100%; height: 700px; border: 1px solid #1e1e1e;
-      border-radius: 8px; background: #111;
+      width: 100%; height: 720px; border: 1px solid rgba(255,255,255,.06);
+      border-radius: 12px; background: #111;
+      box-shadow: 0 30px 80px rgba(0,0,0,.5);
     }
     .resume-dl {
-      display: inline-block; margin-top: 1.5rem;
-      padding: .75rem 2rem; background: var(--purple);
-      color: #fff; text-decoration: none; border-radius: 6px;
-      font-weight: 600; transition: background .2s;
+      display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.8rem;
+      padding: .8rem 2.2rem; background: var(--purple);
+      color: #fff; text-decoration: none; border-radius: 50px;
+      font-weight: 600; font-size: .9rem;
+      transition: background .25s, box-shadow .25s;
+      box-shadow: 0 0 25px rgba(124,58,237,.3);
     }
-    .resume-dl:hover { background: var(--purple-light); }
+    .resume-dl:hover { background: var(--purple-light); box-shadow: 0 0 35px rgba(168,85,247,.45); }
 
     /* ── CONTACT ── */
-    #contact { background: var(--bg); text-align: center; }
-    .contact-links { margin-top: 2rem; display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+    #contact { background: var(--bg); text-align: center; padding: 8rem 2rem; }
+    #contact .section-sub { margin: 0 auto; }
+    .contact-links { margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
     .contact-link {
-      padding: .7rem 1.8rem; border: 1px solid var(--purple);
+      padding: .75rem 1.8rem; border: 1px solid rgba(124,58,237,.4);
       color: var(--purple-light); text-decoration: none;
-      border-radius: 6px; font-size: .9rem;
-      transition: background .2s;
+      border-radius: 50px; font-size: .85rem; letter-spacing: .04em;
+      transition: all .25s; background: rgba(124,58,237,.05);
     }
-    .contact-link:hover { background: var(--purple-dim); }
+    .contact-link:hover { background: var(--purple); border-color: var(--purple); color: #fff; box-shadow: 0 0 25px rgba(124,58,237,.35); }
 
     /* ── FOOTER ── */
     footer {
-      text-align: center; padding: 2rem;
-      border-top: 1px solid #1a1a1a;
-      color: var(--muted); font-size: .8rem;
+      text-align: center; padding: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,.05);
+      color: rgba(255,255,255,.2); font-size: .75rem; letter-spacing: .08em;
     }
 
     /* ── HAMBURGER ── */
@@ -262,30 +323,74 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.2rem; }
+      /* Nav */
+      nav { padding: 0 1.2rem; height: 52px; }
+      .nav-logo { font-size: .78rem; }
       .hamburger { display: flex; }
       .nav-links {
         display: none; flex-direction: column; gap: 0;
         position: absolute; top: 100%; left: 0; width: 100%;
-        background: rgba(8,8,8,.97); border-bottom: 1px solid #1a1a1a;
+        background: rgba(8,8,8,.98); border-bottom: 1px solid rgba(255,255,255,.06);
         padding: .5rem 0;
       }
       .nav-links.open { display: flex; }
-      .nav-links li a { display: block; padding: .85rem 1.5rem; font-size: 1rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .skill-row { grid-template-columns: 110px 1fr 32px; }
-      .gallery-grid { columns: 1; gap: 1rem; }
-      .gallery-header { padding: 0 1rem; }
-      .parallax-section { height: 40vh; background-attachment: scroll; }
-      .parallax-bg { background-attachment: scroll; }
-      .resume-embed { height: 420px; }
-      section { padding: 4rem 1.2rem; }
-      #showreel { padding: 3rem 1.2rem; }
+      .nav-links li a { display: block; padding: .9rem 1.5rem; font-size: .95rem; }
+
+      /* Hero */
+      #hero { align-items: flex-end; justify-content: flex-start; }
+      .hero-content { padding: 0 1.4rem 8vh; max-width: 100%; }
+      .hero-content h1 { font-size: clamp(2.8rem, 12vw, 4rem); }
+      .hero-content p { font-size: .78rem; }
+      .hero-actions { gap: .8rem; }
+      .hero-cta { padding: .75rem 1.8rem; font-size: .85rem; }
+      .hero-scroll { display: none; }
+
+      /* About */
+      #about { padding: 0; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-left { padding: 3.5rem 1.4rem; }
+      .about-right { order: -1; }
+      .about-text { max-width: 100%; }
+      .skill-row { grid-template-columns: 100px 1fr 30px; gap: .6rem; }
+      .skill-name { font-size: .75rem; }
+
+      /* Showreel */
+      #showreel { padding: 4rem 1rem !important; }
+
+      /* Parallax */
+      .parallax-section { height: 35vh; }
+      .parallax-bg { background-attachment: scroll; inset: 0; }
+      .parallax-text { font-size: clamp(1.2rem, 5vw, 2rem); padding: 0 1.2rem; }
+
+      /* Gallery */
+      #gallery { padding: 4rem 1rem; }
+      .gallery-header { padding: 0; margin-bottom: 2rem; }
+      .gallery-grid { columns: 1; gap: .6rem; }
+      .gallery-item { margin-bottom: .6rem; border-radius: 6px; }
+      .gallery-item.featured img { max-height: 60vw; }
+      .gallery-item.portrait img { width: 100%; }
+
+      /* Resume */
+      #resume { padding: 4rem 1.2rem; }
+      .resume-embed { height: 380px; }
+      .resume-inner { margin-top: 2rem; }
+
+      /* Contact */
+      #contact { padding: 4rem 1.2rem !important; }
+
+      /* Sections */
+      section { padding: 4rem 1.4rem; }
     }
+
     @media (max-width: 480px) {
-      .hero-content h1 { font-size: 2.4rem; }
+      .hero-content h1 { font-size: 2.6rem; }
+      .hero-eyebrow { font-size: .62rem; }
+      .hero-actions { flex-direction: column; align-items: flex-start; gap: .7rem; }
+      .hero-cta-ghost { font-size: .8rem; }
+      .section-title { font-size: 1.8rem; }
       .contact-links { flex-direction: column; align-items: center; }
-      .contact-link { width: 100%; max-width: 280px; text-align: center; }
+      .contact-link { width: 100%; max-width: 260px; text-align: center; }
+      .resume-embed { height: 320px; }
     }
   </style>
 </head>
@@ -293,7 +398,7 @@
 
 <!-- NAV -->
 <nav>
-  <span class="nav-logo">G. Álvarez</span>
+  <span class="nav-logo">Gonzalo Álvarez de Asturias</span>
   <ul class="nav-links" id="navLinks">
     <li><a href="#about" data-i18n="nav_about">About</a></li>
     <li><a href="#gallery" data-i18n="nav_work">Work</a></li>
@@ -314,22 +419,28 @@
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <h1>Gonzalo <span>Álvarez</span></h1>
-    <p data-i18n="hero_sub">3D Generalist · Artist · Developer</p>
-    <a href="#gallery" class="hero-cta" data-i18n="hero_cta">View My Work</a>
+    <div class="hero-eyebrow" data-i18n="hero_eyebrow">3D Generalist · Artist · Developer</div>
+    <h1>Gonzalo<span class="last">Álvarez</span></h1>
+    <p data-i18n="hero_sub">Creating worlds from scratch</p>
+    <div class="hero-actions">
+      <a href="#gallery" class="hero-cta" data-i18n="hero_cta">View My Work</a>
+      <a href="#showreel" class="hero-cta-ghost" data-i18n="hero_reel">Watch Showreel</a>
+    </div>
   </div>
+  <div class="hero-scroll" data-i18n="hero_scroll">Scroll</div>
 </section>
 
 <!-- ABOUT -->
-<section id="about">
+<section id="about" style="padding:0;">
   <div class="about-grid">
-    <div>
+    <div class="about-left">
       <p class="section-label" data-i18n="about_label">About Me</p>
       <h2 class="section-title" data-i18n="about_title">Crafting worlds in 3D</h2>
-      <p class="section-sub" data-i18n="about_text">
+      <p class="about-text" data-i18n="about_text">
         I'm a 3D generalist with a passion for creating compelling visuals — from hard-surface modeling and environment design to character art and concept illustration. I combine technical precision with artistic vision to bring ideas to life.
       </p>
       <div class="skills-bars">
+        <p class="skills-title" data-i18n="skills_title">Software Proficiency</p>
         <div class="skill-row"><span class="skill-name">Maya</span><div class="skill-track"><div class="skill-fill" data-w="80"></div></div><span class="skill-pct">80%</span></div>
         <div class="skill-row"><span class="skill-name">Houdini</span><div class="skill-track"><div class="skill-fill" data-w="60"></div></div><span class="skill-pct">60%</span></div>
         <div class="skill-row"><span class="skill-name">Blender</span><div class="skill-track"><div class="skill-fill" data-w="90"></div></div><span class="skill-pct">90%</span></div>
@@ -342,16 +453,18 @@
         <div class="skill-row"><span class="skill-name">After Effects</span><div class="skill-track"><div class="skill-fill" data-w="70"></div></div><span class="skill-pct">70%</span></div>
       </div>
     </div>
-    <img class="about-img" src="images/4kmalpasohalloween.jpg" alt="3D Studio render" />
+    <div class="about-right">
+      <img class="about-img" src="images/4kmalpasohalloween.jpg" alt="3D render" />
+    </div>
   </div>
 </section>
 
 <!-- SHOWREEL -->
-<section id="showreel" style="background:var(--bg); padding:4rem 2rem; text-align:center;">
+<section id="showreel" style="background:var(--bg); padding:8rem 2rem; text-align:center;">
   <p class="section-label" data-i18n="reel_label">Showreel</p>
   <h2 class="section-title" data-i18n="reel_title">Watch My Work</h2>
-  <div style="max-width:900px; margin:2rem auto;">
-    <iframe style="width:100%; aspect-ratio:16/9; border-radius:8px; border:1px solid #1e1e1e;" src="https://www.youtube.com/embed/QhN7MtrByfI" title="Gonzalo Álvarez - Showreel" allowfullscreen></iframe>
+  <div style="max-width:1100px; margin:3rem auto; overflow:hidden;">
+    <iframe style="width:100%; aspect-ratio:16/9; display:block;" src="https://www.youtube.com/embed/QhN7MtrByfI" title="Gonzalo Álvarez - Showreel" allowfullscreen></iframe>
   </div>
 </section>
 
@@ -367,33 +480,62 @@
   <div class="gallery-header">
     <p class="section-label" data-i18n="gallery_label">Portfolio</p>
     <h2 class="section-title" data-i18n="gallery_title">Selected Works</h2>
-    <div class="gallery-tabs">
-      <button class="tab-btn active" data-filter="all" data-i18n="filter_all">All</button>
-    </div>
   </div>
   <div class="gallery-grid" id="galleryGrid">
+
+    <!-- ULTRA WIDE solo: biohazard 2560x1080 -->
     <div class="gallery-item featured" data-cat="3d" data-label="Biohazard"><img src="images/biohazard.png" alt="Biohazard" loading="lazy"><div class="overlay"><span>Biohazard</span></div></div>
+
+    <!-- 16:9 pair -->
+    <div class="gallery-item" data-cat="3d" data-label="Acorazado"><img src="images/acorazado.png" alt="Acorazado" loading="lazy"><div class="overlay"><span>Acorazado</span></div></div>
+    <div class="gallery-item" data-cat="3d" data-label="SpaceX"><img src="images/spacex02.png" alt="SpaceX" loading="lazy"><div class="overlay"><span>SpaceX</span></div></div>
+
+    <!-- ULTRA WIDE solo: Studio_013 4096x1143 -->
     <div class="gallery-item featured" data-cat="3d" data-label="Spring is here"><img src="images/Studio_013.png" alt="Studio 013" loading="lazy"><div class="overlay"><span>Spring is here</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Studio 011"><img src="images/Studio_011.png" alt="Studio 011" loading="lazy"><div class="overlay"><span>Studio 011</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Studio 08"><img src="images/Studio_08-1.png" alt="Studio 08" loading="lazy"><div class="overlay"><span>Studio 08</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Studio 09"><img src="images/studio_09.png" alt="Studio 09" loading="lazy"><div class="overlay"><span>Studio 09</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="Aurora in summer"><img src="images/anime_studio_04_final.png" alt="Anime Studio" loading="lazy"><div class="overlay"><span>Aurora in summer</span></div></div>
-    <div class="gallery-item featured" data-cat="3d" data-label="Acorazado"><img src="images/acorazado.png" alt="Acorazado" loading="lazy"><div class="overlay"><span>Acorazado</span></div></div>
+
+    <!-- 16:9 pair -->
     <div class="gallery-item" data-cat="3d" data-label="Truck Model"><img src="images/truck01.png" alt="Truck" loading="lazy"><div class="overlay"><span>Truck Model</span></div></div>
     <div class="gallery-item" data-cat="3d" data-label="Motor Avión"><img src="images/motoravion01.png" alt="Motor Avion" loading="lazy"><div class="overlay"><span>Motor Avión</span></div></div>
-    <div class="gallery-item" data-cat="3d" data-label="SpaceX"><img src="images/spacex02.png" alt="SpaceX" loading="lazy"><div class="overlay"><span>SpaceX</span></div></div>
+
+    <!-- ULTRA WIDE solo: Studio_011 7680x2160 -->
+    <div class="gallery-item featured" data-cat="3d" data-label="Studio 011"><img src="images/Studio_011.png" alt="Studio 011" loading="lazy"><div class="overlay"><span>Studio 011</span></div></div>
+
+    <!-- 16:9 pair -->
+    <div class="gallery-item" data-cat="character" data-label="Crab"><img src="images/crab_photoshop.png" alt="Crab" loading="lazy"><div class="overlay"><span>Crab</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Guardian Astronómico"><img src="images/guardian_astronomico_photoshop.png" alt="Guardian" loading="lazy"><div class="overlay"><span>Guardian Astronómico</span></div></div>
+
+    <!-- ULTRA WIDE solo: Studio_08-1 7680x2160 -->
+    <div class="gallery-item featured" data-cat="3d" data-label="Studio 08"><img src="images/Studio_08-1.png" alt="Studio 08" loading="lazy"><div class="overlay"><span>Studio 08</span></div></div>
+
+    <!-- 16:9 pair -->
+    <div class="gallery-item" data-cat="character" data-label="Venom"><img src="images/venom_03.png" alt="Venom" loading="lazy"><div class="overlay"><span>Venom</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Seres"><img src="images/Seres.png" alt="Seres" loading="lazy"><div class="overlay"><span>Seres</span></div></div>
+
+    <!-- ULTRA WIDE solo: Halloween 4096x2160 -->
     <div class="gallery-item featured" data-cat="3d" data-label="Halloween"><img src="images/4kmalpasohalloween.jpg" alt="Halloween" loading="lazy"><div class="overlay"><span>Halloween</span></div></div>
-    <div class="gallery-item" data-cat="concept" data-label="Concept Art"><img src="images/concept_art_07.png" alt="Concept Art 07" loading="lazy"><div class="overlay"><span>Concept Art</span></div></div>
+
+    <!-- 16:9 pair -->
+    <div class="gallery-item" data-cat="character" data-label="Kuruko Yi 01"><img src="images/kuruko-yi_01.png" alt="Kuruko Yi 01" loading="lazy"><div class="overlay"><span>Kuruko Yi 01</span></div></div>
+    <div class="gallery-item" data-cat="character" data-label="Kuruko Yi 02"><img src="images/kuruko-yi_02.png" alt="Kuruko Yi 02" loading="lazy"><div class="overlay"><span>Kuruko Yi 02</span></div></div>
+
+    <!-- ULTRA WIDE solo: studio_09 7680x2160 -->
+    <div class="gallery-item featured" data-cat="3d" data-label="Studio 09"><img src="images/studio_09.png" alt="Studio 09" loading="lazy"><div class="overlay"><span>Studio 09</span></div></div>
+
+    <!-- PORTRAIT solo: anime_studio 2160x4096 -->
+    <div class="gallery-item portrait" data-cat="3d" data-label="Aurora in summer"><img src="images/anime_studio_04_final.png" alt="Anime Studio" loading="lazy"><div class="overlay"><span>Aurora in summer</span></div></div>
+
+    <!-- SQUARE-ISH solo: concept_art_07 2069x2160 -->
+    <div class="gallery-item featured" data-cat="concept" data-label="Concept Art"><img src="images/concept_art_07.png" alt="Concept Art" loading="lazy"><div class="overlay"><span>Concept Art</span></div></div>
+
+    <!-- 16:9 pair -->
     <div class="gallery-item" data-cat="concept" data-label="Concept Art 02"><img src="images/concept_art_07_02.png" alt="Concept Art 02" loading="lazy"><div class="overlay"><span>Concept Art 02</span></div></div>
     <div class="gallery-item" data-cat="concept" data-label="Concept Art 03"><img src="images/concept_art_07_03.png" alt="Concept Art 03" loading="lazy"><div class="overlay"><span>Concept Art 03</span></div></div>
-    <div class="gallery-item" data-cat="character" data-label="Venom"><img src="images/venom_03.png" alt="Venom" loading="lazy"><div class="overlay"><span>Venom</span></div></div>
+
+    <!-- 16:9 pair -->
     <div class="gallery-item" data-cat="character" data-label="Venom 02"><img src="images/venom_02.png" alt="Venom 02" loading="lazy"><div class="overlay"><span>Venom 02</span></div></div>
-    <div class="gallery-item" data-cat="character" data-label="Guardian Astronómico"><img src="images/guardian_astronomico_photoshop.png" alt="Guardian" loading="lazy"><div class="overlay"><span>Guardian Astronómico</span></div></div>
-    <div class="gallery-item" data-cat="character" data-label="Crab"><img src="images/crab_photoshop.png" alt="Crab" loading="lazy"><div class="overlay"><span>Crab</span></div></div>
-    <div class="gallery-item" data-cat="character" data-label="Seres"><img src="images/Seres.png" alt="Seres" loading="lazy"><div class="overlay"><span>Seres</span></div></div>
     <div class="gallery-item" data-cat="character" data-label="Salivante de Playa"><img src="images/salivante_de_playa_01.png" alt="Salivante" loading="lazy"><div class="overlay"><span>Salivante de Playa</span></div></div>
-    <div class="gallery-item featured" data-cat="character" data-label="Kuruko Yi 01"><img src="images/kuruko-yi_01.png" alt="Kuruko Yi 01" loading="lazy"><div class="overlay"><span>Kuruko Yi 01</span></div></div>
-    <div class="gallery-item featured" data-cat="character" data-label="Kuruko Yi 02"><img src="images/kuruko-yi_02.png" alt="Kuruko Yi 02" loading="lazy"><div class="overlay"><span>Kuruko Yi 02</span></div></div>
+
+  </div>
   </div>
 </section>
 
@@ -460,8 +602,10 @@
   const translations = {
     en: {
       nav_about: "About", nav_work: "Work", nav_reel: "Showreel", nav_resume: "Resume", nav_contact: "Contact",
-      hero_sub: "3D Generalist · Artist · Developer",
-      hero_cta: "View My Work",
+      hero_eyebrow: "3D Generalist · Artist · Developer",
+      hero_sub: "Creating worlds from scratch",
+      hero_cta: "View My Work", hero_scroll: "Scroll", hero_reel: "Watch Showreel",
+      skills_title: "Software Proficiency",
       about_label: "About Me", about_title: "Crafting worlds in 3D",
       about_text: "I'm a 3D generalist with a passion for creating compelling visuals — from hard-surface modeling and environment design to character art and concept illustration. I combine technical precision with artistic vision to bring ideas to life.",
       reel_label: "Showreel", reel_title: "Watch My Work",
@@ -478,8 +622,10 @@
     },
     es: {
       nav_about: "Sobre mí", nav_work: "Trabajo", nav_reel: "Showreel", nav_resume: "Currículum", nav_contact: "Contacto",
-      hero_sub: "Generalista 3D · Artista · Desarrollador",
-      hero_cta: "Ver mi trabajo",
+      hero_eyebrow: "Generalista 3D · Artista · Desarrollador",
+      hero_sub: "Creando mundos desde cero",
+      hero_cta: "Ver mi trabajo", hero_scroll: "Scroll", hero_reel: "Ver Showreel",
+      skills_title: "Dominio de Software",
       about_label: "Sobre mí", about_title: "Creando mundos en 3D",
       about_text: "Soy un generalista 3D apasionado por crear visuales impactantes — desde modelado hard-surface y diseño de entornos hasta arte de personajes e ilustración conceptual. Combino precisión técnica con visión artística para dar vida a las ideas.",
       reel_label: "Showreel", reel_title: "Ver mi trabajo en video",
